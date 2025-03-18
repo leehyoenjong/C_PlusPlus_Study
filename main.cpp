@@ -21,8 +21,16 @@ int main()
 
 	//<< std::endl : 개행(줄바꿈)
 	std::cout << "Hello World" << std::endl;
-	
+
 	//using namespace std를 이용해 std를 빼고 가능
-	cout << "Test Output";
+	cout << "Test Output" << std::endl;
+
+	//관계 연산자
+	cout << ("10 < 20 = ") << (10 < 20) << endl;
+	cout << ("10 <- 20 = ") << (10 <= 20) << endl;
+	cout << ("10 > 20 = ") << (10 > 20) << endl;
+	cout << ("10 >= 20 = ") << (10 >= 20) << endl;
+	cout << ("10 == 20 = ") << (10 == 20) << endl;
+	cout << ("10 != 20 = ") << (10 != 20) << endl;
 	return 0;
 }
