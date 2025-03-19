@@ -32,5 +32,15 @@ int main()
 	cout << ("10 >= 20 = ") << (10 >= 20) << endl;
 	cout << ("10 == 20 = ") << (10 == 20) << endl;
 	cout << ("10 != 20 = ") << (10 != 20) << endl;
+
+	//cin은 입력을 받아 넣어주는 역할
+	cout << "숫자를 입력해주세요 : ";
+	int Number;
+	cin >> Number;
+
+	//비트 연산자
+	cout << "10 ~ 20 = " << (10 <= Number && Number <= 20) << endl;
+
+
 	return 0;
 }
