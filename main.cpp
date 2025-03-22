@@ -7,6 +7,24 @@
 //using namespace를 이용하여 std를 생략 가능
 using namespace std;
 
+enum NUM
+{
+	//아무것도 부여하지 않은 경우 0부터 시작
+	NUM_0,
+	NUM_1,
+	NUM_2,
+	NUM_3,
+	NUM_4,
+	NUM_5,
+	NUM_6,
+	NUM_7,
+	NUM_8,
+	NUM_9,
+	NUM_10
+};
+
+#define NUM_11 11
+
 // 실행 과정 : 컴파일 -> 빌드 -> 실행
 // 컴파일 : 번역 작업(소스코드를 기계어(저수준 언어)로 변환)
 // 빌드 : 컴파일된 파일을 실행파일로 변환
@@ -236,5 +254,79 @@ int main()
 	cout << "99.9999까지의 난수 생성 : " << (rand() % 10000 / 100.f) << endl;
 
 
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡSwitch문
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡSwich문" << endl;
+
+	//switch문 : 값에 따라 실행문을 실행
+	//switch(변수) { case 값 : 실행문 }
+
+	int number = 3;
+	cout << "숫자를 입력하세요 : ";
+	cin >> number;
+
+	//break : switch문을 빠져나가는 역할
+	//case 3, 4일 때 실행문을 실행하고 break를 만나면 switch문을 빠져나간다.
+	//default : case에 없는 값일 때 실행문을 실행
+	switch(number)
+	{
+		case 1:
+			cout << "1입니다." << endl;
+			break;
+		case 2:
+			cout << "2입니다." << endl;
+			break;
+		case 3:
+		case 4:
+			cout << "3 또는 4입니다." << endl;
+			break;
+
+		default:
+			cout << "그 외의 숫자입니다." << endl;
+			break;
+	}
+
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ열거체
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ열거체" << endl;
+
+	//열거체 : 연속된 숫자에 이름을 부여할 수 있는 기능
+	//형태는 enum : 열거체를 선언할 때 사용하는 키워드
+	//열거체명을 이용해 열거체 타이의 변수를 선언도 가능
+	//열거체는 즉, 숫자에 이름을 부여하는 것이다.
+
+	switch (number)
+	{
+	case NUM_1:
+		cout << "열거체: 1입니다." << endl;
+		break;
+	case NUM_2:
+		cout << "열거체: 2입니다." << endl;
+		break;
+	case NUM_3:
+	case NUM_4:
+		cout << "열거체: 3 또는 4입니다." << endl;
+		break;
+	case NUM_11:
+		cout << "열거체: 11입니다." << endl;
+		break;
+	default:
+		cout << "열거체: 그 외의 숫자입니다." << endl;
+		break;
+	}
+
+	//열거체 타입의 변수 선언
+	//열거체 타입의 변수는 무조건 4byte의 크기를 가진다.
+	NUM eNumber = NUM_1;
+	cout << "열거체 메모리 크기 : " << sizeof(eNumber) << endl;
+	cout << "열거형 타입도 알수 있음 : " << typeid(eNumber).name() << endl;
+
 	return 0;
 }
+
