@@ -41,7 +41,7 @@ int main()
 	//비트 연산자
 	cout << "10 ~ 20 = " << (10 <= Number && Number <= 20) << endl;
 
-	
+
 	//비트 논리 연산자 
 	// 
 	// 선행학습 
@@ -71,7 +71,7 @@ int main()
 	const int iCritical = 0x00000010; // 2진수 : 10000
 
 	// 1 | 100 = 101 | 10000 = 10101
-	int iBuf = iAttack | iHP | iCritical; 
+	int iBuf = iAttack | iHP | iCritical;
 
 	// 10101 & 1 = 00001
 	cout << "Attack : " << (iBuf & iAttack) << endl;
@@ -101,7 +101,7 @@ int main()
 	//쉬프트 연산자 : <<. >>
 	//값대 값을 연산하여 값으로 나오게 됨
 	//이 연산자 또한 이진수 단위의 연산을 하게 됨
-	
+
 	// Q. 20 << 2 = ?
 	// 20 : 10100
 	// 20 << 2 = 80
@@ -123,7 +123,7 @@ int main()
 	// 나누기로 활용한다면 빠르게 연산이 가능하다.
 	// 나눗셈 이라는 연산 자체가 무거운 연산이라 쉬프트 연산을 이용하면 빠르게 가능 
 	// 20 / 2 보다 20 * 0.5가 더 빠르고	20 >> 1이 더 빠르다.
-	
+
 
 	int iHght = 187;
 	int iLow = 13560;
@@ -141,6 +141,72 @@ int main()
 	cout << "High : " << (iNumber >> 16) << endl;
 	cout << "Low : " << (iNumber & 0x0000FFFF) << endl;
 	//F로 표현하는 이유는 16진수로 표현하기 위함	
+
+
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡif문
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡif문" << endl;
+
+	//분기문 크게 2가지 if문, switch문
+	//if문 : 조건에 따라 실행문을 실행
+	// if(조건) { 실행문 }
+	if (true)
+	{
+		cout << "True" << endl;
+	}
+
+	if (false)
+	{
+		cout << "False" << endl;
+	}
+
+	if ((iBuf & iAttack) != 0)
+	{
+		cout << "Attack 버프가 있음" << endl;
+	}
+
+	if ((iBuf & iArmor) != 0)
+	{
+		cout << "Armor 버프가 있음" << endl;
+	}
+
+	//else : if문이 거짓일 때 실행
+	//else { 실행문 }
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡelse" << endl;
+	if (false)
+	{
+		cout << "True" << endl;
+	}
+	else
+	{
+		cout << "else" << endl;
+	}
+	
+	//else if : if문이 거짓일 때 다시 조건을 검사
+	//else if(조건) { 실행문 }
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡelse if" << endl;
+	if (false)
+	{
+		cout << "True" << endl;
+	}
+	else if (true)
+	{
+		cout << "else if" << endl;
+	}
+	else
+	{
+		cout << "else" << endl;
+	}
+
+
+	//switch문 : 조건에 따라 실행문을 실행
+	// switch(변수) { case 값 : 실행문 break; case 값 : 실행문 break; default : 실행문 break; }
+
+
+
 
 	return 0;
 }
