@@ -2,6 +2,7 @@
 // iosteam : 만들어진 라이브러리 기능들이 들어 있다.
 // #include : 헤더파일을 여기에 포함시키는 기능
 #include<iostream>
+#include<time.h>
 
 //using namespace를 이용하여 std를 생략 가능
 using namespace std;
@@ -184,7 +185,7 @@ int main()
 	{
 		cout << "else" << endl;
 	}
-	
+
 	//else if : if문이 거짓일 때 다시 조건을 검사
 	//else if(조건) { 실행문 }
 	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡelse if" << endl;
@@ -202,10 +203,37 @@ int main()
 	}
 
 
-	//switch문 : 조건에 따라 실행문을 실행
-	// switch(변수) { case 값 : 실행문 break; case 값 : 실행문 break; default : 실행문 break; }
 
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ난수
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ난수" << endl;
 
+	// srand는 unsigned int를 받아들이기 때문에, time는 unsigned int로 형변환하여 전달한다.
+	// 형변환이란? 데이터의 형태를 바꾸는 것
+	// int a = 10; float b = (float)a;
+	// time은 시간을 받아오는 함수
+
+	//난수를 생성하기 위해 srand를 사용
+	//srand는 난수를 생성하기 위한 시드값을 설정하는 함수
+	//time을 이용하는 이유는 실행할 때마다 다른 난수를 생성하기 위함
+	srand((unsigned int)time(0));
+
+	//rand는 0~32767까지의 값을 반환한다.(즉 난수 생성)
+	cout << "난수 생성 : " << rand() << endl;
+	cout << "난수 생성 : " << rand() << endl;
+	cout << "난수 생성 : " << rand() << endl;
+
+	//0~99까지의 난수 생성 
+	cout << "0~99까지의 난수 생성 : " << (rand() % 100) << endl;
+
+	//100~200까지의 난수 생성
+	cout << "100~200까지의 난수 생성 : " << (rand() % 101 + 100) << endl;
+
+	//99.9999까지의 난수 생성
+	cout << "99.9999까지의 난수 생성 : " << (rand() % 10000 / 100.f) << endl;
 
 
 	return 0;
