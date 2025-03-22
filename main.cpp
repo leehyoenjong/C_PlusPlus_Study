@@ -327,6 +327,37 @@ int main()
 	cout << "열거체 메모리 크기 : " << sizeof(eNumber) << endl;
 	cout << "열거형 타입도 알수 있음 : " << typeid(eNumber).name() << endl;
 
+
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ반복문
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ반복문" << endl;
+	//반복문 : 조건에 따라 실행문을 반복
+	//종류 : for문, while문, do while문
+	//반복문을 빠져나오는 방법 : 조건이 거짓이 되면 빠져나오거나 break를 넣으면 빠져나옴
+
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡwhile문
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡwhile문" << endl;
+	//while문 : 조건이 참일 때 실행문을 반복
+	//while(조건) { 실행문 }
+	number = 0;
+	while (number < 10)
+	{
+		cout << "while문 실행중 : " << number << endl;
+		number++;
+
+		if (number == 4)
+			break;
+	}
+
+
+
 	return 0;
 }
 
