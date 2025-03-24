@@ -474,6 +474,28 @@ int main()
 		}
 	}
 
+	//화면을 깨끗히 지워주는 명령어
+	system("cls");
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdo while" << endl;
+
+	//do while문 : 조건이 참일 때 실행문을 반복
+	//선언 : do { 실행문 } while(조건)
+	//do while문은 조건이 거짓이여도 한번은 실행된다.
+
+	number = 0;
+	do
+	{
+		cout << "do while문 실행중 : " << number << endl;
+		number++;
+	} while (number < 10);
+	cout << "조건식: (number < 10)" << endl;
+
+
+
+
+
+
+
 	return 0;
 }
 
