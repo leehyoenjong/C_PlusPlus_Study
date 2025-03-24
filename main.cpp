@@ -43,6 +43,12 @@ enum SRP
 // C++의 시작점은 main 함수이다. main 함수는 반드시 있어야 함
 int main()
 {
+	
+	return 0;
+}
+
+void Lotto()
+{
 	/*
 	로또 프로그램 만들기
 	1. 1~45까지의 숫자 중 6개를 랜덤으로 뽑는다.
@@ -103,9 +109,7 @@ int main()
 		cout << "6개 뽑기 : " << iLotto[i] << "\t";
 	}
 	cout << "보너스 번호 : " << iLotto[6] << endl;
-	return 0;
 }
-
 
 
 void BaseCode()
