@@ -43,6 +43,73 @@ enum SRP
 // C++의 시작점은 main 함수이다. main 함수는 반드시 있어야 함
 int main()
 {
+	/*
+	로또 프로그램 만들기
+	1. 1~45까지의 숫자 중 6개를 랜덤으로 뽑는다.
+	2. 중복된 숫자가 나오면 안된다.
+	3. 오름차순으로 정렬하여 출력한다.
+	*/
+	int iLotto[45] = {};
+	srand((unsigned int)time(0));
+
+	for (int i = 0; i < 6; i++)
+	{
+		cout << "랜덤으로 뽑은 번호 : " << rand() % 45 + 1 << endl;
+	}
+	//문제점 : 중복된 숫자가 나올 수 있음
+
+	//중복된 숫자가 나오지 않게 하기 위해
+	for (int i = 0; i < 45; i++)
+	{
+		//1~45까지의 숫자를 넣어줌
+		iLotto[i] = i + 1;
+	}
+
+	//Swap 알고리즘
+	//임시 변수를 이용해 값을 바꿔줌
+	/*
+	int iNum1 = 1, iNum2 = 2, iNum3;
+	iNum3 = iNum1;
+	iNum1 = iNum2;
+	iNum2 = iNum3;
+	*/
+
+	//섞기
+	int iTemp, idx1, idx2;
+	//100번 정도 골고루 섞는다
+	for (int i = 0; i < 100; i++)
+	{
+		idx1 = rand() % 45;
+		idx2 = rand() % 45;
+
+		//swap 알고리즘
+		iTemp = iLotto[idx1];
+		iLotto[idx1] = iLotto[idx2];
+		iLotto[idx2] = iTemp;
+	}
+
+	cout << endl;
+
+	for (int i = 0; i < 45; i++)
+	{
+		cout << "섞였는지 체크 : " << iLotto[i] << ", ";
+	}
+
+	cout << endl;
+	cout << endl;
+
+	for (int i = 0; i < 6; i++)
+	{
+		cout << "6개 뽑기 : " << iLotto[i] << "\t";
+	}
+	cout << "보너스 번호 : " << iLotto[6] << endl;
+	return 0;
+}
+
+
+
+void BaseCode()
+{
 	//C++ 표준 기능의 대부분은 std라는 namespace 안에 존재, 이름이 겹치는 것을 방지
 	//cout : 콘솔창에 출력해주는 기능, "" 안에 있는 문자열을 화면에 출력
 	std::cout << "Test Output";
@@ -530,8 +597,4 @@ int main()
 	int iArray2D[2][5] = { {1, 2, 3, 4, 5}, {6, 7, 8, 9, 10} };
 	cout << "이차원 배열 인덱스[0][0] : " << iArray2D[0][0] << endl;
 	cout << "이차원 배열 인덱스[1][4] : " << iArray2D[1][4] << endl;
-
-
-	return 0;
 }
-
