@@ -25,6 +25,15 @@ enum NUM
 
 #define NUM_11 11
 
+//가위 바위 보 열거체
+enum SRP
+{
+	SRP_SCISSORS = 0,
+	SRP_ROCK,
+	SRP_PAPER,
+	SRP_END
+};
+
 // 실행 과정 : 컴파일 -> 빌드 -> 실행
 // 컴파일 : 번역 작업(소스코드를 기계어(저수준 언어)로 변환)
 // 빌드 : 컴파일된 파일을 실행파일로 변환
@@ -271,22 +280,22 @@ int main()
 	//break : switch문을 빠져나가는 역할
 	//case 3, 4일 때 실행문을 실행하고 break를 만나면 switch문을 빠져나간다.
 	//default : case에 없는 값일 때 실행문을 실행
-	switch(number)
+	switch (number)
 	{
-		case 1:
-			cout << "1입니다." << endl;
-			break;
-		case 2:
-			cout << "2입니다." << endl;
-			break;
-		case 3:
-		case 4:
-			cout << "3 또는 4입니다." << endl;
-			break;
+	case 1:
+		cout << "1입니다." << endl;
+		break;
+	case 2:
+		cout << "2입니다." << endl;
+		break;
+	case 3:
+	case 4:
+		cout << "3 또는 4입니다." << endl;
+		break;
 
-		default:
-			cout << "그 외의 숫자입니다." << endl;
-			break;
+	default:
+		cout << "그 외의 숫자입니다." << endl;
+		break;
 	}
 
 	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ열거체
@@ -356,7 +365,114 @@ int main()
 			break;
 	}
 
+	//화면을 깨끗히 지워주는 명령어
+	system("cls");
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ가위바위보" << endl;
+	//난수테이블 생성
+	srand((unsigned int)time(0));
 
+	//가위바위보 게임 만들기 
+	int srp = 0;
+	int iAI = 0;
+	while (true)
+	{
+		cout << "가위(0) 바위(1) 보(2) 끝내기(3) 선택하시오 : ";
+		cin >> srp;
+		cout << "Player : " << (SRP)srp << endl;
+
+		//잘못된 값 입력 시 처리
+		//continue : 다음 반복문으로 넘어가는 명령어
+		if (srp == SRP_END)
+		{
+			cout << "가위바위보 게임을 종료합니다." << endl;
+			break;
+		}
+		else if (srp < SRP_SCISSORS || srp >= SRP_END)
+		{
+			cout << "잘못된 값을 입력하셨습니다." << endl;
+			continue;
+		}
+
+
+		//난수 가위바위보 선택
+		//SRP_END를 넣으면 0~2까지의 난수가 생성
+		iAI = rand() % SRP_END;
+
+		cout << "AI : " << (SRP)iAI << endl;
+
+		//승자결정
+		switch (srp)
+		{
+		case SRP_SCISSORS:
+			if (iAI == SRP_SCISSORS)
+				cout << "비겼습니다." << endl;
+			else if (iAI == SRP_ROCK)
+				cout << "졌습니다." << endl;
+			else if (iAI == SRP_PAPER)
+				cout << "이겼습니다." << endl;
+			break;
+		case SRP_ROCK:
+			if (iAI == SRP_SCISSORS)
+				cout << "이겼습니다." << endl;
+			else if (iAI == SRP_ROCK)
+				cout << "비겼습니다." << endl;
+			else if (iAI == SRP_PAPER)
+				cout << "졌습니다." << endl;
+			break;
+		case SRP_PAPER:
+			if (iAI == SRP_SCISSORS)
+				cout << "졌습니다." << endl;
+			else if (iAI == SRP_ROCK)
+				cout << "이겼습니다." << endl;
+			else if (iAI == SRP_PAPER)
+				cout << "비겼습니다." << endl;
+			break;
+		}
+	}
+
+
+
+
+	//화면을 깨끗히 지워주는 명령어
+	system("cls");
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡfor문" << endl;
+
+	//for문 : 조건이 참일 때 실행문을 반복
+	//for(초기값; 조건; 증감) { 실행문 }
+	//초기값 : 반복문을 시작할 때 초기값을 설정
+	//조건 : 반복문을 빠져나올 조건
+	//증감 : 반복문이 실행될 때마다 증감할 값
+
+	//초기값 : i = 0, 조건 : i < 10, 증감 : i++
+	for (int i = 0; i < 10; i++)
+	{
+		cout << "for문 실행중 : " << i << endl;
+	}
+
+	//구구단
+	for (int i = 2; i < 10; i++)
+	{
+		cout << i << "단" << endl;
+		for (int j = 1; j < 10; j++)
+		{
+			cout << i << " * " << j << " = " << i * j << endl;
+		}
+	}
+
+	// 1~ 100 사이의 숫자 중 짝수만 출력
+	for (int i = 2; i <= 100; i += 2)
+	{
+		cout << i << endl;
+	}
+
+	// 1 ~ 100 사이 숫자중 3과 7의 공배수만 출력하는 if문 만들기
+	for (int i = 1; i <= 100; i++)
+	{
+		if (i % 3 == 0 && i % 7 == 0)
+		{
+			cout << i << endl;
+		}
+	}
 
 	return 0;
 }
