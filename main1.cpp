@@ -8,6 +8,21 @@ enum AI_MODE
 	AM_EASY = 1,
 	AM_HARD
 };
+enum LINE_NUMBER
+{
+	LN_H1,
+	LN_H2,
+	LN_H3,
+	LN_H4,
+	LN_H5,
+	LN_V1,
+	LN_V2,
+	LN_V3,
+	LN_V4,
+	LN_V5,
+	LN_LT,
+	LN_RT
+};
 
 int main()
 {
@@ -113,7 +128,7 @@ int main()
 			cout << endl;
 		}
 
-		cout << "AI Bingo Line : " << iBingo << endl << endl;
+		cout << "AI Bingo Line : " << iAIBingo << endl << endl;
 
 
 		//줄수가 2이상일 경우 빙고라인을 체크한다.
@@ -213,6 +228,140 @@ int main()
 			iInput = iNoneSelect[rand() % iNoneSelCnt];
 			break;
 		case AM_HARD:
+			// 하드모드는 현재 숫자중 빙고줄 완성 가능성이 가장 높은 줄을 찾아, 그 줄에 있는 숫자중 하나를 *로 만든다.
+			int iLine = 0;
+			int iStarCount = 0;
+			int iSaveCount = 0;
+
+			//가로 라인 중에 가장 *이 많은 라인을 찾아낸다.
+			for (int i = 0; i < 5; ++i)
+			{
+				for (int j = 0; j < 5; ++j)
+				{
+					//가로줄 체크
+					if (iAIArray[i * 5 + j] == INT_MAX)
+					{
+						++iStarCount;
+					}
+				}
+
+				//별이 5개보다 미만이여야 빙고가 아님 && 새로운 라인을 찾았을 때
+				//그 라인의 별 갯수를 저장하고 그 라인을 선택한다.
+				//이렇게 하면 별이 가장 많은 라인을 찾을 수 있다.
+				if (iStarCount < 5 && iSaveCount < iStarCount)
+				{
+					//가로 라인중 가장 별이 많은 라인을 체크
+					//가로 라인은 0~4로 의미를 부여
+					iLine = i;
+					iSaveCount = iStarCount;
+				}
+			}
+			//가로 라인 중 가장	별이 많은 라인을 찾았다.
+			//이 값을 가지고 세로 라인들과 비교하여 별이 가장 많은 라인을 찾아낸다.
+			for (int i = 0; i < 5; ++i)
+			{
+				iStarCount = 0;
+				for (int j = 0; j < 5; ++j)
+				{
+					if (iAIArray[j * 5 + i] == INT_MAX)
+					{
+						++iStarCount;
+					}
+				}
+
+				if (iStarCount < 5 && iSaveCount < iStarCount)
+				{
+					//세로 라인중 가장 별이 많은 라인을 체크
+					//세로 라인은 5~9로 의미를 부여
+					iLine = i + 5;
+					iSaveCount = iStarCount;
+				}
+			}
+
+			//왼쪽 -> 오른쪽 대각선 체크
+			iStarCount = 0;
+			for (int i = 0; i < 25; i += 6)
+			{
+				if (iAIArray[i] == INT_MAX)
+				{
+					++iStarCount;
+				}
+			}
+			if (iStarCount < 5 && iSaveCount < iStarCount)
+			{
+				//왼쪽 -> 오른쪽 대각선 체크
+				//대각선은 10번으로 의미를 부여
+				iLine = LN_LT;
+				iSaveCount = iStarCount;
+			}
+
+			//오른쪽 -> 왼쪽 대각선 체크
+			iStarCount = 0;
+			for (int i = 4; i <= 20; i += 4)
+			{
+				if (iAIArray[i] == INT_MAX)
+				{
+					++iStarCount;
+				}
+			}
+			if (iStarCount < 5 && iSaveCount < iStarCount)
+			{
+				//오른쪽 -> 왼쪽 대각선 체크
+				//대각선은 11번으로 의미를 부여
+				iLine = LN_RT;
+				iSaveCount = iStarCount;
+			}
+
+			//모든 라인을 조사했으면 iLine에는 가장 별이 많은 라인이 저장되어 있다.
+			//그 라인에 있는 *이 아닌 숫자중 하나를 선택한다.
+			//가로줄일 경우
+			if (iLine <= LN_H5)
+			{
+				for (int i = 0; i < 5; ++i)
+				{
+					if (iAIArray[iLine * 5 + i] != INT_MAX)
+					{
+						iInput = iAIArray[iLine * 5 + i];
+						break;
+					}
+				}
+			}
+			//세로줄일 경우
+			else if (iLine <= LN_V5)
+			{
+				for (int i = 0; i < 5; ++i)
+				{
+					if (iAIArray[i * 5 + (iLine - 5)] != INT_MAX)
+					{
+						iInput = iAIArray[i * 5 + (iLine - 5)];
+						break;
+					}
+				}
+			}
+			//왼쪽 -> 오른쪽 대각선
+			else if (iLine == LN_LT)
+			{
+				for (int i = 0; i < 25; i += 6)
+				{
+					if (iAIArray[i] != INT_MAX)
+					{
+						iInput = iAIArray[i];
+						break;
+					}
+				}
+			}
+			//오른쪽 -> 왼쪽 대각선
+			else if (iLine == LN_RT)
+			{
+				for (int i = 4; i <= 20; i += 4)
+				{
+					if (iAIArray[i] != INT_MAX)
+					{
+						iInput = iAIArray[i];
+						break;
+					}
+				}
+			}
 			break;
 		}
 
@@ -246,6 +395,7 @@ int main()
 		{
 			//한줄 체크하기 전 먼저 0으로 초기화
 			iStar1 = iStar2 = 0;
+			iAIStar1 = 0, iAIStar2 = 0;
 			for (int j = 0; j < 5; j++)
 			{
 				//가로 별 갯수 구해준다
