@@ -27,8 +27,8 @@
     <ClCompile Include="main2.cpp">
       <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="main_TextRPG.cpp">
+      <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
