@@ -151,5 +151,44 @@ int main()
 	cout << "pStudent 주소 : " << &pStudent << endl; //pStudent의 주소
 	cout << "pvoid 주소 : " << pvoid << endl; //pvoid의 주소
 
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ이중 포인터: " << endl;
+	//이중 포인터는 포인터의 주소를 저장하는 변수
+	//이중 포인터 : *를 2개 붙인다.
+	int iNum = 1111;
+	int iNum1 = 2222;
+	int* pNum = &iNum;
+
+	int **ppNum = &pNum; //이중 포인터
+	*pNum = 3333;
+	cout << "iNum 값 : " << iNum << endl; //iNum의 값
+	cout << "iNum 주소 : " << &iNum << endl; //iNum의 주소
+	cout << endl;
+	cout << "*pNum : " << *pNum << endl; //iNum의 값
+	cout << "pNum 값 : " << pNum << endl; //iNum의 주소
+	cout << "pNum 주소 : " << &pNum << endl; //iNum의 주소
+	cout << endl;
+	cout << "**ppNum 값 : " << **ppNum << endl; //iNum의 값
+	cout << "*ppNum 주소 : " << *ppNum << endl; //iNum의 주소
+	cout << "ppNum의 값 : " << ppNum << endl; // pNum의 주소
+	cout << "ppNum의 주소 : " << &ppNum << endl; //ppNum의 주소
+
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡiNum1의 주소로 변경" << endl;
+	*ppNum = &iNum1; //pNum의 주소를 iNum1의 주소로 변경
+	cout << "iNum 값 : " << iNum << endl; //iNum의 값
+	cout << "iNum 주소 : " << &iNum << endl; //iNum의 주소
+	cout << endl;
+	cout << "*pNum : " << *pNum << endl; //iNum의 값
+	cout << "pNum 값 : " << pNum << endl; //iNum의 주소
+	cout << "pNum 주소 : " << &pNum << endl; //iNum의 주소
+	cout << endl;
+	cout << "**ppNum 값 : " << **ppNum << endl; //iNum의 값
+	cout << "*ppNum 주소 : " << *ppNum << endl; //iNum의 주소
+	cout << "ppNum의 값 : " << ppNum << endl; // pNum의 주소
+	cout << "ppNum의 주소 : " << &ppNum << endl; //ppNum의 주소
+
+
 	return 0;
 }
