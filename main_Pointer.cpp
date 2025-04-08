@@ -2,6 +2,16 @@
 
 using namespace std;
 
+
+struct _tagStudent
+{
+	int iKor;
+	int iEng;
+	int iMath;
+	int iTotal;
+	float fAvg;
+};
+
 int main()
 {
 	//포인터 : 가르키는 것
@@ -16,12 +26,12 @@ int main()
 	//메모리 주소에 접근해 값을 제어할 수 있음
 
 	//형태 : 변수타입 *변수명 의 형태로 선언
-	
+
 	//일반 변수
 	int iInt = 10;
 	//포인터 변수, &는 주소를 가져오는 연산자
 	//pInt는 &iInt를 해줌으로써 주소를 가르키는 포인터 변수가 되었음
-	int *pInt = &iInt;
+	int* pInt = &iInt;
 
 
 	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ메모리 확인" << endl;
@@ -71,7 +81,7 @@ int main()
 	int* pArray = iArr;
 	pArray[2] = 100;
 	cout << "pArray[2] : " << pArray[2] << endl; //100
-	cout << "iArr[2] : " <<  iArr[2] << endl; //100
+	cout << "iArr[2] : " << iArr[2] << endl; //100
 
 	cout << endl;
 	cout << endl;
@@ -81,6 +91,65 @@ int main()
 	cout << "pArray       :" << pArray << endl; //iArr의 주소
 	cout << "pArray + 2   :" << pArray + 2 << endl; //iArr의 주소
 	cout << "*pArray      :" << *pArray << endl; //iArr의 주소
-	cout << "*(pArray +2) :" << *(pArray +2)<< endl; //iArr의 주소
+	cout << "*(pArray +2) :" << *(pArray + 2) << endl; //iArr의 주소
+
+
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡchar 포인터: " << endl;
+	//const를 바꾸면 문자열로 저장할 수 있음 
+	// 값을 바꾸면 메모리 주소가 바뀜
+	const char* pText = "text";
+	cout << "pText 주소 : " << (int*)pText << endl; //pText의 주소
+	pText = "texts";
+	cout << "pText 주소 : " << (int*)pText << endl; //pText의 주소
+	pText = "texts";
+	cout << "pText 주소 : " << (int*)pText << endl; //pText의 주소
+	pText = "textsss";
+	cout << "pText 주소 : " << (int*)pText << endl; //pText의 주소
+	
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ구조체 포인터: " << endl;
+	_tagStudent student = {};
+	student.iKor = 100;
+	cout << "student.iKor : " << student.iKor << endl; //100
+
+
+	_tagStudent* pStudent = &student;
+	// 연산자 우선순위 때문에 .을 먼저 인식함
+	//메모리 주소 .은 잘못된 문법이며 *pStudent를 괄호로 감싸잔 후 
+	// .을 이용해 가리크는 대상의 맴버변술에 접근해야함
+	(*pStudent).iKor = 50;
+	cout << "student.iKor : " << student.iKor << endl; //50
+
+	// ->을 이용해 가르키는 대상의 맴버에 접근 가능
+	pStudent->iKor = 80;
+	cout << "student.iKor : " << student.iKor << endl; //80
+
+	cout << endl;
+	cout << endl;
+	cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡvoid 포인터: " << endl;
+	// void : 타입이 없다.
+	// void* 변수를 선언하면 모든 타입이든 메모리주소든 가르킬 수 있다.
+	void* pvoid = &iInt;
+	cout << "iInt 주소 : " << &iInt << endl; //iInt의 주소
+	cout << "pvoid 주소 : " << pvoid << endl; //pvoid의 주소
+
+	cout << endl;
+	cout << "역참조 전 iInt 값 : " << iInt << endl; //iInt의 주소
+	// 단, 역참조가 불가능하고 메모리 주소만 저장 가능
+	//*pvoid = 10; //역참조 불가능
+	int* pConvefrt = (int*)pvoid; //형변환을 해줘야 역참조 가능
+	*pConvefrt = 10; //역참조 가능
+	cout << "역참조 후 iInt 값 : " << iInt << endl; //iInt의 주소
+	*((int*)pvoid) = 20; //역참조 가능
+	cout << "역참조 후 iInt 값 : " << iInt << endl; //iInt의 주소
+
+	cout << endl;
+	pvoid = &pStudent;
+	cout << "pStudent 주소 : " << &pStudent << endl; //pStudent의 주소
+	cout << "pvoid 주소 : " << pvoid << endl; //pvoid의 주소
+
 	return 0;
 }
