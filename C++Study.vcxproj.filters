@@ -18,13 +18,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main0.cpp">
+    <ClCompile Include="main_base.cpp">
       <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
     </ClCompile>
-    <ClCompile Include="main1.cpp">
+    <ClCompile Include="main_bingo.cpp">
       <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
     </ClCompile>
-    <ClCompile Include="main2.cpp">
+    <ClCompile Include="main_stuct.cpp">
       <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
     </ClCompile>
     <ClCompile Include="main_TextRPG.cpp">
@@ -34,7 +34,10 @@
       <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
     </ClCompile>
     <ClCompile Include="main_fuction.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
+    </ClCompile>
+    <ClCompile Include="main_bingo_fuction.cpp">
+      <Filter>소스 파일\이전 사용했던 메인 폴더</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
