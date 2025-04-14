@@ -52,14 +52,6 @@ enum BATTLE
 	BATTLE_BACK,
 };
 
-#define NAME_SIZE 32
-#define ITEM_DESC_LENGTH 32
-#define INVENTORY_MAX 20
-#define STORE_WEAPON_MAX 3
-#define STORE_ARMOR_MAX 3
-#define LEVEL_MAX 10
-const int g_iLevelUpEXP[LEVEL_MAX] = { 1000,2000,3000,4000, 5000,6000,7000,8000,9000,10000 };
-
 struct _tagLevelUpStatus
 {
 	int iAttackMin;
@@ -71,6 +63,15 @@ struct _tagLevelUpStatus
 	int iMpMin;
 	int iMpMax;
 };
+
+#define NAME_SIZE 32
+#define ITEM_DESC_LENGTH 32
+#define INVENTORY_MAX 20
+#define STORE_WEAPON_MAX 3
+#define STORE_ARMOR_MAX 3
+#define LEVEL_MAX 10
+const int g_iLevelUpEXP[LEVEL_MAX] = { 1000,2000,3000,4000, 5000,6000,7000,8000,9000,10000 };
+_tagLevelUpStatus g_tLvUpTable[JOB_END - 1] = {};
 
 struct _tagItem
 {
@@ -361,6 +362,118 @@ int OutputBattleMenu()
 	return iMenu;
 }
 
+void Battle(_tagPlayer* pPlayer, _tagMonster* pMonster)
+{
+
+	//플레이어가 공격
+	// 예를들어 min 5 Max15 일 경우
+	// 15 - 5 + 1을하면 11이 됨
+	// 11로 나눈 나머지는 0~10이 되고 여기에 min값인 5를 더하게 되면 5~15사이로 값이 나오게 됨
+	int iattackmin = pPlayer->iAttackMin;
+	int iattackmax = pPlayer->iAttackMax;
+
+	if (pPlayer->bEquip[EQ_WEAPON])
+	{
+		iattackmin += pPlayer->tEquip[EQ_WEAPON].iMin;
+		iattackmax += pPlayer->tEquip[EQ_WEAPON].iMax;
+	}
+
+	int iattack = rand() % ((iattackmax - iattackmin + 1) + iattackmin);
+	int iarmor = rand() % ((pMonster->iArmorMax - pMonster->iArmorMin + 1) + pMonster->iArmorMin);
+	int idamage = iattack - iarmor;
+
+	//삼항연산자 : 조건식 ? true일때값 : flase일때 값
+	idamage = idamage < 1 ? 1 : idamage;
+
+	//몬스터 hp를 감소시킨다
+	pMonster->iHp -= idamage;
+
+	cout << pPlayer->strName << " 가 " << pMonster->strName << " 에게 " << idamage << " 피해를 입혔습니다. " << endl;
+
+	//몬스터가 죽었을 경우
+	if (pMonster->iHp <= 0)
+	{
+		cout << pMonster->strName << " 몬스터가 사망하였습니다." << endl;
+		pPlayer->iExp += pMonster->iExp;
+		int igold = rand() % ((pMonster->iGoleMax - pMonster->iGoleMin + 1) + pMonster->iGoleMin);
+		pPlayer->tInventory.iGold += igold;
+
+		//몬스터 다시 부활
+		pMonster->iHp = pMonster->iHpMax;
+		pMonster->iMP = pMonster->iMPMax;
+
+		cout << pMonster->iExp << " 경험치를 획득하였습니다. " << endl;
+		cout << igold << " 골드를 획득하였습니다." << endl;
+
+		//레벨업을 했는지 체크
+		if (pPlayer->iExp >= g_iLevelUpEXP[pPlayer->iLevel - 1])
+		{
+			//레벨업에 필요한 만큼만 차감
+			pPlayer->iExp -= g_iLevelUpEXP[pPlayer->iLevel - 1];
+
+			//레벨업 처리
+			++pPlayer->iLevel;
+			cout << "레벨업 하셨습니다!" << endl;
+
+			//능력치 상승
+			int ijobindex = pPlayer->eJob - 1;
+			int hpup = rand() % ((g_tLvUpTable[ijobindex].iHpMax - g_tLvUpTable[ijobindex].iHpMin + 1) + g_tLvUpTable[ijobindex].iHpMin);
+			int mpup = rand() % ((g_tLvUpTable[ijobindex].iMpMax - g_tLvUpTable[ijobindex].iMpMin + 1) + g_tLvUpTable[ijobindex].iMpMin);
+
+			pPlayer->iAttackMin += g_tLvUpTable[ijobindex].iAttackMin;
+			pPlayer->iAttackMax += g_tLvUpTable[ijobindex].iAttackMax;
+			pPlayer->iArmorMax += g_tLvUpTable[ijobindex].iArmorMax;
+			pPlayer->iArmorMin += g_tLvUpTable[ijobindex].iArmorMin;
+
+			pPlayer->iHpMax += hpup;
+			pPlayer->iMPMax += mpup;
+
+			//체력과 마나를 회복 시킨다.
+			pPlayer->iHp = pPlayer->iHpMax;
+			pPlayer->iMP = pPlayer->iMPMax;
+		}
+		return;
+	}
+
+	//몬스터가 살아있다면 몬스터가 공격
+	iattack = rand() % ((pMonster->iAttackMax - pMonster->iAttackMin + 1) + pMonster->iAttackMin);
+
+	int iarmorkmin = pPlayer->iArmorMin;
+	int iarmormax = pPlayer->iArmorMax;
+
+	if (pPlayer->bEquip[EQ_ARMOR])
+	{
+		iattackmin += pPlayer->tEquip[EQ_ARMOR].iMin;
+		iattackmax += pPlayer->tEquip[EQ_ARMOR].iMax;
+	}
+	iarmor = rand() % ((iattackmax - iattackmin + 1) + iattackmin);
+	idamage = iattack - iarmor;
+
+	idamage = idamage <= 0 ? 0 : idamage;
+
+	//플레이어 데미지 받음
+	pPlayer->iHp -= idamage;
+
+	cout << pMonster->strName << " 가 " << pPlayer->strName << " 에게 " << idamage << " 피해를 입혔습니다. " << endl;
+
+	//몬스터가 죽었을 경우
+	if (pPlayer->iHp <= 0)
+	{
+		cout << pPlayer->strName << " 플레이어가 사망하였습니다." << endl;
+		int iexp = pPlayer->iExp * 0.1f;
+		int igold = pPlayer->tInventory.iGold * 0.1f;
+		pPlayer->iExp -= iexp;
+		pPlayer->tInventory.iGold -= igold;
+
+		cout << iexp << " 경험치를 잃었습니다. " << endl;
+		cout << igold << " 골드를 잃었습니다." << endl;
+
+		//플레이어의 hp와 mp를 회복한다
+		pPlayer->iHp = pPlayer->iHpMax;
+		pPlayer->iMP = pPlayer->iMPMax;
+	}
+}
+
 void RunBattle(_tagPlayer* pPlayer, _tagMonster* pMonsterArr, int iMenu)
 {
 	_tagMonster tMonster = pMonsterArr[iMenu - 1];
@@ -379,6 +492,8 @@ void RunBattle(_tagPlayer* pPlayer, _tagMonster* pMonsterArr, int iMenu)
 		switch (OutputBattleMenu())
 		{
 		case BATTLE_ATTACK:
+			Battle(pPlayer, &tMonster);
+			system("pause");
 			break;
 		case BATTLE_BACK:
 			return;
@@ -401,6 +516,24 @@ void RunMap(_tagPlayer* pPlayer, _tagMonster* tMonsterArr)
 	}
 }
 
+_tagLevelUpStatus CreateLvUpStatus(int iAttackMin, int iAttackMax, int iArmorMin, int iArmorMax, int iHpMin, int iHpMax, int iMpMin, int iMpMax)
+{
+	//Job_End는 4이다 그런데 직업은 3개이므로 -1을 해주어 각 직업별로 생성하도록 함
+	_tagLevelUpStatus tLvUpTable = {};
+	tLvUpTable.iAttackMin = iAttackMin;
+	tLvUpTable.iAttackMax = iAttackMax;
+	tLvUpTable.iArmorMin = iArmorMin;
+	tLvUpTable.iArmorMax = iArmorMax;
+	tLvUpTable.iHpMin = iHpMin;
+	tLvUpTable.iHpMax = iHpMax;
+	tLvUpTable.iMpMin = iMpMin;
+	tLvUpTable.iMpMax = iMpMax;
+
+	return tLvUpTable;
+}
+
+
+
 int main()
 {
 	srand((unsigned int)time(0));
@@ -415,6 +548,12 @@ int main()
 	//몬스터 생성
 	_tagMonster tMonsterArr[MT_BACK - 1] = {};
 	SetMonster(tMonsterArr);
+
+	//직업별 레벨업 상태 정보
+	g_tLvUpTable[JOB_KNIGHT - 1] = CreateLvUpStatus(4, 10, 8, 15, 50, 100, 10, 20);
+	g_tLvUpTable[JOB_ARCHER - 1] = CreateLvUpStatus(10, 15, 5, 10, 30, 60, 30, 50);
+	g_tLvUpTable[JOB_WIZARD - 1] = CreateLvUpStatus(15, 20, 3, 7, 20, 40, 50, 1000);
+
 
 	while (bLoop)
 	{
